@@ -3,7 +3,7 @@ let coursesData = [
     courseCode: "course0",
     courseNameEN: "foundation course",
     courseNameAR: "الكورس التأسيسي",
-    courseCover: "MEDIA/courses-covers/main-course.svg",
+    courseCover: "MEDIA/courses-covers/main-course.png",
     targetGroupEN: "from 8 - 13 years old kids",
     targetGroupAR: "الأطفال من عمر 8 - 13 سنة",
     coursePointsAR: [
@@ -32,7 +32,7 @@ let coursesData = [
     courseCode: "course1",
     courseNameEN: "Equipping for the Future course",
     courseNameAR: "كورس الاستعداد للمستقبل",
-    courseCover: "MEDIA/courses-covers/future-course.svg",
+    courseCover: "MEDIA/courses-covers/future-course.png",
     targetGroupEN: "from 13 - 17 years old teenagers",
     targetGroupAR: "الشباب من عمر 13 - 17 سنة",
     coursePointsAR: [
