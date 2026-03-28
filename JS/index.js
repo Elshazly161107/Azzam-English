@@ -32,40 +32,51 @@ for (let i = 0; i < coursesData.length; i++) {
   ).toLocaleDateString("ar-EG");
   //
   course.innerHTML = `
-    <div class="img">
-        <img
-            src="${coursesData[i].courseCover}"
-            alt>
-    </div>
-    <div class="details">
-        <div class="header">
-            <h1>${coursesData[i].courseNameAR}</h1>
-            <h2>الفئة المستهدفة : <span>${coursesData[i].targetGroupAR}</span></h2>
-        </div>
-        <div class="center">
-          <div class="text">
-           ${pointsDiv}
-          </div>
-            <div class="btns">
-                <button class="btn-type-one">${coursesData[i].showCourseBtnAR}</button>
-                <button
-                    class="buy-course-home-btn btn-type-two">${coursesData[i].subscribeBtnAR}</button>
-            </div>
-        </div>
-        <div class="footer">
-            <div class="price">
-                <h1>
-                    <span>${coursesData[i].coursePrice}</span>
-                    <img
-                        src="MEDIA/Saudi-Riyal-Symbol/Saudi-Riyal-Symbol-white.svg"
-                        alt>
-                </h1>
-            </div>
-            <div class="dates">
-                <p class="create-day">${startData}</p>
-                <p class="last-update">${lastUpdate}</p>
-            </div>
-        </div>
-    </div>`;
+  <div class="img">
+  <img
+  src="${coursesData[i].courseCover}"
+  alt>
+  </div>
+  <div class="details">
+  <div class="header">
+  <h1>${coursesData[i].courseNameAR}</h1>
+  <h2 class="arabic-num">الفئة المستهدفة : <span>${coursesData[i].targetGroupAR}</span></h2>
+  </div>
+  <div class="center">
+  <div class="text">
+  ${pointsDiv}
+  </div>
+  <div class="btns">
+  <button class="btn-type-one">${coursesData[i].showCourseBtnAR}</button>
+  <button
+  class="buy-course-home-btn btn-type-two">${coursesData[i].subscribeBtnAR}</button>
+  </div>
+  </div>
+  <div class="footer">
+  <div class="price">
+  <h1>
+  <span class="arabic-num">${coursesData[i].coursePrice}</span>
+  <img
+  src="MEDIA/Saudi-Riyal-Symbol/Saudi-Riyal-Symbol-white.svg"
+  alt>
+  </h1>
+  </div>
+  <div class="dates">
+  <p class="create-day arabic-num">${startData}</p>
+  <p class="last-update arabic-num">${lastUpdate}</p>
+  </div>
+  </div>
+  </div>`;
   nowCoursesHomeContainer.appendChild(course);
 }
+
+// arabic nums
+function convertText(node) {
+  if (node.nodeType === 3) {
+    node.nodeValue = node.nodeValue.replace(/\d/g, (d) => "٠١٢٣٤٥٦٧٨٩"[d]);
+  } else {
+    node.childNodes.forEach(convertText);
+  }
+}
+
+convertText(document.body);

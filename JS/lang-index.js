@@ -1,33 +1,78 @@
+// INIT
+
 let langBtn = document.getElementById("lang");
 
-langBtn.addEventListener("click", function () {
+if (!sessionStorage.getItem("currentLang")) {
+  sessionStorage.setItem("currentLang", "ar");
+  sessionStorage.setItem("currentDir", "rtl");
+  sessionStorage.setItem("currentClass", "ar");
+}
+
+// HELPERS
+
+function getLang() {
+  return sessionStorage.getItem("currentLang");
+}
+
+// APPLY ALL
+
+function applyLanguage() {
   html();
   header();
   mainSection();
   homeCourses();
+}
+
+// TOGGLE LANG
+
+function toggleLang() {
+  let currentLang = getLang();
+
+  if (currentLang === "ar") {
+    sessionStorage.setItem("currentLang", "en");
+    sessionStorage.setItem("currentDir", "ltr");
+    sessionStorage.setItem("currentClass", "ar");
+  } else {
+    sessionStorage.setItem("currentLang", "ar");
+    sessionStorage.setItem("currentDir", "rtl");
+    sessionStorage.setItem("currentClass", "en");
+  }
+}
+
+// EVENTS
+
+langBtn.addEventListener("click", function () {
+  toggleLang();
+  applyLanguage();
 });
 
-// functions
+document.addEventListener("DOMContentLoaded", function () {
+  applyLanguage();
+});
+
+// HTML SETTINGS
 
 function html() {
   let htmlPage = document.querySelector("html");
-  if (langBtn.textContent === "EN") {
-    langBtn.textContent = "AR";
-    htmlPage.setAttribute("class", "ar");
-    htmlPage.setAttribute("lang", "en");
-    htmlPage.setAttribute("dir", "ltr");
-  } else {
-    langBtn.textContent = "EN";
-    htmlPage.setAttribute("class", "en");
-    htmlPage.setAttribute("lang", "ar");
-    htmlPage.setAttribute("dir", "rtl");
-  }
+
+  let lang = getLang();
+  let dir = sessionStorage.getItem("currentDir");
+  let cls = sessionStorage.getItem("currentClass");
+
+  htmlPage.setAttribute("lang", lang);
+  htmlPage.setAttribute("dir", dir);
+  htmlPage.setAttribute("class", cls);
+
+  langBtn.textContent = lang === "ar" ? "EN" : "عــ";
 }
+
+// HEADER
 
 function header() {
   let setNewUserBtn = document.getElementById("create-new-user");
   let alreadyUserBtn = document.getElementById("already-user");
-  if (langBtn.textContent === "EN") {
+
+  if (getLang() === "ar") {
     setNewUserBtn.textContent = "انضم إلينا !";
     alreadyUserBtn.textContent = "تسجيل الدخول";
   } else {
@@ -36,136 +81,135 @@ function header() {
   }
 }
 
+// MAIN SECTION
+
 function mainSection() {
   let mainH1 = document.querySelector(".main-section h1");
   let mainH2 = document.querySelector(".main-section h2");
-  // --- h1
-  if (langBtn.textContent === "EN") {
+
+  if (getLang() === "ar") {
     mainH1.innerHTML = "مع <span>عزام</span>";
-  } else {
-    mainH1.innerHTML = "with <span>azzam</span>";
-  }
-  // --- h2
-  if (langBtn.textContent === "EN") {
     mainH2.innerHTML = "تأسيس من <span>a</span> إلى <span>z</span>";
   } else {
+    mainH1.innerHTML = "with <span>azzam</span>";
     mainH2.innerHTML = "foundation from <span>a</span> to <span>z</span>";
   }
 }
 
+// COURSES
+
 function homeCourses() {
-  if (langBtn.textContent === "EN") {
+  nowCoursesHomeContainer.innerHTML = "";
+
+  if (getLang() === "ar") {
     nowCoursesHomeH1.textContent = "الكورسات الحالية";
-    nowCoursesHomeContainer.innerHTML = "";
+
     for (let i = 0; i < coursesData.length; i++) {
       let course = document.createElement("div");
       course.classList.add("course");
-      //
-      let pointsDiv = "";
-      for (let o = 0; o < coursesData[i].coursePointsAR.length; o++) {
-        let p = `<p>${coursesData[i].coursePointsAR[o]}</p>`;
-        pointsDiv += p;
-      }
-      //
-      let startData = new Date(
+
+      let points = coursesData[i].coursePointsAR
+        .map((p) => `<p>${p}</p>`)
+        .join("");
+
+      let startDate = new Date(
         coursesData[i].courseStartDate,
-      ).toLocaleDateString("ar-EG");
+      ).toLocaleDateString("ar");
+
       let lastUpdate = new Date(
         coursesData[i].courseLastUpdateDate,
-      ).toLocaleDateString("ar-EG");
-      //
+      ).toLocaleDateString("ar");
+
       course.innerHTML = `
-    <div class="img">
-        <img
-            src="${coursesData[i].courseCover}"
-            alt>
-    </div>
-    <div class="details">
-        <div class="header">
+        <div class="img">
+          <img src="${coursesData[i].courseCover}">
+        </div>
+        <div class="details">
+          <div class="header">
             <h1>${coursesData[i].courseNameAR}</h1>
-            <h2>الفئة المستهدفة : <span>${coursesData[i].targetGroupAR}</span></h2>
-        </div>
-        <div class="center">
-          <div class="text">
-           ${pointsDiv}
+            <h2 class="arabic-num">الفئة المستهدفة :
+              <span>${coursesData[i].targetGroupAR}</span>
+            </h2>
           </div>
+          <div class="center">
+            <div class="text">${points}</div>
             <div class="btns">
-                <button class="btn-type-one">${coursesData[i].showCourseBtnAR}</button>
-                <button
-                    class="buy-course-home-btn btn-type-two">${coursesData[i].subscribeBtnAR}</button>
+              <button class="btn-type-one">${coursesData[i].showCourseBtnAR}</button>
+              <button class="btn-type-two buy-course-home-btn">${coursesData[i].subscribeBtnAR}</button>
             </div>
-        </div>
-        <div class="footer">
+          </div>
+          <div class="footer">
             <div class="price">
-                <h1>
-                    <span>${coursesData[i].coursePrice}</span>
-                    <img
-                        src="MEDIA/Saudi-Riyal-Symbol/Saudi-Riyal-Symbol-white.svg"
-                        alt>
+              <h1>
+                <span class="arabic-num">${coursesData[i].coursePrice}</span>
+                <img
+                src="MEDIA/Saudi-Riyal-Symbol/Saudi-Riyal-Symbol-white.svg"
+                alt>
                 </h1>
             </div>
             <div class="dates">
-                <p class="create-day">${startData}</p>
-                <p class="last-update">${lastUpdate}</p>
+              <p class="arabic-num">${startDate}</p>
+              <p class="arabic-num">${lastUpdate}</p>
             </div>
+          </div>
         </div>
-    </div>`;
+      `;
+
       nowCoursesHomeContainer.appendChild(course);
     }
+
+    convertText(document.body);
   } else {
     nowCoursesHomeH1.textContent = "Current Courses";
-    nowCoursesHomeContainer.innerHTML = "";
+
     for (let i = 0; i < coursesData.length; i++) {
       let course = document.createElement("div");
       course.classList.add("course");
-      //
-      let pointsDiv = "";
-      for (let o = 0; o < coursesData[i].coursePointsEN.length; o++) {
-        let p = `<p>${coursesData[i].coursePointsEN[o]}</p>`;
-        pointsDiv += p;
-      }
-      //
-      let startData = new Date(
+
+      let points = coursesData[i].coursePointsEN
+        .map((p) => `<p>${p}</p>`)
+        .join("");
+
+      let startDate = new Date(
         coursesData[i].courseStartDate,
       ).toLocaleDateString("en");
+
       let lastUpdate = new Date(
         coursesData[i].courseLastUpdateDate,
       ).toLocaleDateString("en");
-      //
+
       course.innerHTML = `
-    <div class="img">
-        <img
-            src="${coursesData[i].courseCover}"
-            alt>
-    </div>
-    <div class="details">
-        <div class="header">
+        <div class="img">
+          <img src="${coursesData[i].courseCover}">
+        </div>
+        <div class="details">
+          <div class="header">
             <h1>${coursesData[i].courseNameEN}</h1>
-            <h2>Target Audience : <span>${coursesData[i].targetGroupEN}</span></h2>
-        </div>
-        <div class="center">
-          <div class="text">
-           ${pointsDiv}
+            <h2>Target Audience :
+              <span>${coursesData[i].targetGroupEN}</span>
+            </h2>
           </div>
+          <div class="center">
+            <div class="text">${points}</div>
             <div class="btns">
-                <button class="btn-type-one">${coursesData[i].showCourseBtnEN}</button>
-                <button
-                    class="buy-course-home-btn btn-type-two">${coursesData[i].subscribeBtnEN}</button>
+              <button class="btn-type-one">${coursesData[i].showCourseBtnEN}</button>
+              <button class="btn-type-two buy-course-home-btn">${coursesData[i].subscribeBtnEN}</button>
             </div>
-        </div>
-        <div class="footer">
+          </div>
+          <div class="footer">
             <div class="price">
-                <h1>
-                    <span>${coursesData[i].coursePrice}</span>
-                    sar
-                </h1>
+              <h1>
+                <span>${coursesData[i].coursePrice}</span> sar
+              </h1>
             </div>
             <div class="dates">
-                <p class="create-day">${startData}</p>
-                <p class="last-update">${lastUpdate}</p>
+              <p>${startDate}</p>
+              <p>${lastUpdate}</p>
             </div>
+          </div>
         </div>
-    </div>`;
+      `;
+
       nowCoursesHomeContainer.appendChild(course);
     }
   }

@@ -50,11 +50,12 @@
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--blue-primary);
+    background: var(--text-muted);
 }
 
 ::-webkit-scrollbar {
     width: 10px;
+    background: transparent;
 }
 
 ::-webkit-scrollbar-track {
@@ -225,7 +226,7 @@ header .btns {
     }
 
     header .btns.open {
-        width: 70%;
+        width: calc(100% - 52.5px);
     }
 }
 
@@ -524,7 +525,7 @@ main:first-of-type {
     overflow: hidden;
     display: flex;
     flex-flow: column nowrap;
-    padding: 0 5px 10px;
+    padding: 10px 5px;
     transition: 0.5s;
 }
 
@@ -615,11 +616,11 @@ main:first-of-type {
 .main-courses .courses .course .details .footer .price h1 span {
     font-size: 40px;
     font-weight: 600;
-    transform: translateY(15px);
 }
 
 .main-courses .courses .course .details .footer .price h1 img {
     height: 20px;
+    transform: translateY(-7.5px);
 }
 
 .main-courses .courses .course .details .footer .dates {
@@ -633,4 +634,9 @@ main:first-of-type {
     padding: 0 5px;
     width: fit-content;
     color: var(--text-secondary);
+}
+
+footer {
+    position: relative;
+    top: 0;
 }
