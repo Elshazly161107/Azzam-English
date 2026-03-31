@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Log In</title>
+
+        <link rel="icon" href="MEDIA/main-logo.svg">
+        <link rel="stylesheet" href="../general.css">
+        <link rel="stylesheet" href="../CSS/login.css">
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+            integrity="sha512-p1A9B6...etc..." crossorigin="anonymous"
+            referrerpolicy="no-referrer" />
+    </head>
+    <body>
+        <header>
+            <div class="container">
+                <img src="../MEDIA/main-logo.svg" alt="logo">
+                <h1></h1>
+                <div class="btns">
+                    <button class="lang" id="lang">EN</button>
+                </div>
+                <i id="menu-bars" class="fa-solid fa-bars"></i>
+            </div>
+        </header>
+        <main>
+            <div class="container">
+                <div class="box">
+                    <form action>
+                        <div class="username">
+                            <input type="email" name="email" id="usernameIn"
+                                placeholder="email">
+                        </div>
+                        <div class="password">
+                            <input type="password" name="password"
+                                id="passwordIn" placeholder="password">
+                        </div>
+                        <div class="btns">
+                            <button class="btn-type-one" type="submit"
+                                name="logIn"
+                                id="logInBtn">log in</button>
+                        </div>
+                    </form>
+                    <div class="footer">
+                        <h1>
+                            <p>don't have an account ?</p>
+                            <a href="../HTML/signup.html">sign up</a>
+                        </h1>
+                        <a href>forget password ?</a>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </body>
+    <script src="../JS/login-signup/login.js"></script>
+    <script src="../JS/login-signup/login-lang.js"></script>
+</html>
