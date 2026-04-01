@@ -9,7 +9,7 @@ menuBtn.addEventListener("click", function () {
   menuBtn.classList.toggle("fa-xmark");
 });
 
-// box
+// log in form text
 
 let userNameIn = document.querySelector("main form input[type='email']");
 let PasswordIn = document.querySelector("main form input[type='password']");

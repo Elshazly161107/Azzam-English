@@ -1,0 +1,541 @@
+/* body */
+
+body {
+    height: 100vh;
+}
+
+/* header */
+
+header {
+    background: var(--bg-secondary);
+    width: 100%;
+    height: 80px;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+header .container {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+header img {
+    height: 60px;
+}
+
+header h1 {
+    color: var(--text-main);
+    font-weight: 300;
+    font-size: 22px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-align: center;
+}
+
+header .btns {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+@media (max-width: 640px) {
+    header .btns {
+        position: fixed;
+        right: 0;
+        top: 0;
+        z-index: 2;
+        background: var(--bg-card);
+        height: 100vh;
+        width: 0;
+        flex-direction: column;
+        gap: 0;
+        overflow: hidden;
+        transition: 0.3s;
+    }
+
+    html.ar header .btns {
+        right: auto;
+        left: 0;
+    }
+
+    header .btns.open {
+        width: calc(100% - 52.5px);
+    }
+}
+
+header button {
+    padding: 10px 20px;
+    min-width: 70px;
+    font-size: 15px;
+    text-transform: uppercase;
+    font-weight: 600;
+    border-radius: 50px;
+    background: transparent;
+    color: var(--text-main);
+    border: 2px solid var(--text-main);
+    text-wrap: nowrap;
+    transition: 0.3s;
+}
+
+@media (max-width: 640px) {
+    header button {
+        border-radius: 0;
+        border: none;
+        width: 100%;
+        padding: 10px;
+        margin-top: 20px;
+        font-size: 25px;
+    }
+
+    header .lang {
+        border: 2px solid var(--text-main);
+        width: fit-content;
+        margin-top: 100px;
+    }
+}
+
+header button:hover {
+    color: var(--gold-soft);
+    border-color: var(--gold-soft);
+}
+
+header i {
+    color: var(--text-main);
+    font-size: 30px;
+    cursor: pointer;
+    display: none !important;
+    transition: 0.3s;
+}
+
+header i:hover {
+    color: var(--gold-soft);
+}
+
+@media (max-width: 640px) {
+    header i {
+        display: block !important;
+    }
+}
+
+/* nav */
+
+nav {
+    position: fixed;
+    top: 80px;
+    height: 120px;
+    width: 100%;
+    overflow: hidden;
+    background: var(--bg-secondary);
+    border-top: 2px solid var(--text-main);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+}
+
+@media (max-width: 870px) {
+    nav {
+        display: none;
+    }
+}
+
+/* nav>div {
+    
+} */
+
+nav .nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+nav .nav::before {
+    position: absolute;
+    content: "";
+    width: 100%;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 5px;
+    background: var(--text-muted);
+    opacity: 0.25;
+    border-radius: 50px;
+    z-index: -2;
+}
+
+nav .nav::after {
+    position: absolute;
+    content: "";
+    width: 100px;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 5px;
+    background: var(--correct);
+    border-radius: 50px;
+    z-index: -1;
+    transition: 0.3s;
+}
+
+nav .comp-step-1.nav::after {
+    width: 300px;
+}
+
+nav .comp-step-2.nav::after {
+    width: 500px;
+}
+
+nav .comp-step-3.nav::after {
+    width: 700px;
+}
+
+nav .comp-step-4.nav::after {
+    width: 800px;
+}
+
+html.ar nav .nav::after {
+    right: auto;
+    left: 0;
+}
+
+nav .nav .steps {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+}
+
+nav .steps>div {
+    position: relative;
+    width: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+nav .steps>div:nth-last-of-type(n) p {
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    width: 100%;
+}
+
+nav .steps>div:nth-last-of-type(2n) p {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    width: 100%;
+}
+
+nav .steps>div p {
+    color: var(--text-muted);
+    font-weight: 500;
+    text-transform: uppercase;
+    transition: 0.5s;
+}
+
+nav .steps>div p.current {
+    color: var(--text-main);
+}
+
+nav .steps>div span {
+    padding: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+    width: 30px;
+    text-align: center;
+    background: var(--bg-secondary);
+    border-radius: 50%;
+    border: 2px solid var(--text-muted);
+    color: var(--text-muted);
+    font-weight: 700;
+    transition: 0.5s;
+}
+
+nav .steps>div span.current {
+    background: var(--blue-dark);
+    color: var(--text-main);
+    border-color: var(--text-main);
+}
+
+nav .steps>div span.complete {
+    background: var(--correct);
+    color: var(--text-main);
+    border-color: var(--text-main);
+}
+
+/* main */
+
+main {
+    background: var(--blue-dark);
+    position: fixed;
+    top: calc(80px + 120px);
+    height: calc(100vh - (80px + 120px + 80px));
+    width: 100%;
+}
+
+@media (max-width: 870px) {
+    main {
+        top: 80px;
+        height: calc(100vh - (80px + 80px));
+    }
+}
+
+main .container {
+    height: 100%;
+    width: 100%;
+    padding: 15px;
+}
+
+main .container>div {
+    height: 100%;
+    width: 100%;
+    display: none;
+}
+
+main.forms-main .container>div.active {
+    display: block;
+}
+
+main .container>div .content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 15px;
+    align-content: center;
+    align-self: center;
+    height: 100%;
+    width: 100%;
+}
+
+main .container .form-3 .content {
+    grid-template-columns: 1fr;
+}
+
+main .container .form-3 .content .quiz {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+main .container .form-3 .content h1 {
+    font-size: 20px;
+    color: var(--text-muted);
+    width: 100%;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+main .container .form-3 .content a {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    text-transform: capitalize;
+    text-decoration: none;
+    padding: 5px 15px;
+    background: var(--gold-soft);
+    color: var(--bg-main);
+    font-weight: 700;
+    width: fit-content;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    border-bottom: 5px solid var(--bg-main);
+}
+
+main .container .form-3 .content a:hover {
+    text-decoration: underline;
+}
+
+main .container .form-3 .content table {
+    width: 100%;
+}
+
+main .container .form-3 .content table td {
+    background: var(--text-muted);
+    margin: 1px;
+    text-align: center;
+    text-transform: capitalize;
+
+}
+
+main .container .form-4 .content {
+    grid-template-columns: 1fr;
+}
+
+main .container .form-4 .content .user-name-div {
+    position: relative;
+}
+
+main .container .form-4 .content .user-name-div i {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: var(--text-main);
+    border-radius: 50%;
+    aspect-ratio: 1 / 1;
+    display: none;
+}
+
+main .container .form-4 .content .user-name-div i.active {
+    display: block;
+}
+
+i.available {
+    color: var(--correct);
+}
+
+i.unavailable {
+    color: var(--wrong);
+}
+
+main label {
+    display: block;
+    color: var(--text-muted);
+    font-weight: 700;
+    text-transform: capitalize;
+    margin-bottom: 5px;
+}
+
+main :is(input, select) {
+    outline: none;
+    width: 100%;
+    padding: 5px;
+    background: var(--text-muted);
+    color: var(--bg-main);
+    font-weight: 700;
+    font-size: 20px;
+    border: none;
+    border-bottom: 3px solid var(--gold-soft);
+    opacity: 0.3;
+    transition: 0.3s;
+}
+
+main :is(input.warrning, select.warrning) {
+    background: var(--warrning);
+    border-bottom-color: var(--wrong);
+}
+
+main :is(input, select):focus {
+    opacity: 1;
+}
+
+main :is(option, select) {
+    text-transform: capitalize;
+}
+
+/* footer */
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 80px;
+    background: var(--bg-secondary);
+}
+
+footer .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 12px;
+    height: 100%;
+}
+
+footer .btns {
+    display: flex;
+    align-self: center;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+footer .btns button {
+    font-size: 20px;
+    padding: 5px 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+footer .btns button i {
+    font-size: 12px;
+}
+
+footer .info {
+    position: relative;
+    transform: translateX(20px);
+}
+
+html.en footer .info {
+    position: relative;
+    transform: translateX(-20px);
+}
+
+footer .info>i {
+    color: var(--text-muted);
+    font-size: 20px;
+    cursor: pointer;
+}
+
+footer .info>i:hover {
+    color: var(--text-main);
+}
+
+footer .info::after {
+    position: absolute;
+    content: "";
+    width: 0;
+    height: 0;
+    border: 7px solid transparent;
+    border-top-color: var(--text-main) !important;
+    bottom: calc(100% + 2.5px);
+    left: 3px;
+    display: none;
+}
+
+footer .info:hover::after {
+    display: block;
+}
+
+footer .info .text {
+    position: absolute;
+    background: var(--text-main);
+    bottom: calc(100% + 15px);
+    left: -20px;
+    width: 250px;
+    border-radius: 10px;
+    padding: 5px;
+    display: none;
+}
+
+html.en footer .info .text {
+    left: auto;
+    right: -20px;
+}
+
+footer .info:hover .text {
+    display: block;
+}
+
+footer .info .text p {
+    color: var(--bg-main);
+    font-size: 15px;
+    font-weight: 600;
+    text-transform: lowercase;
+}
+
+footer .info .text p::first-letter {
+    text-transform: uppercase;
+}

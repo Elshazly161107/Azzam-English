@@ -6,6 +6,7 @@
     --blue-primary: #1a5c8e;
     --blue-secondary: #276490;
     --blue-accent: #13609c;
+    --blue-dark: #004071;
 
     /* ========== DARK THEME BACKGROUNDS ========== */
     --bg-main: #0b1620;
@@ -35,6 +36,10 @@
 
     /* ========== TRANSITION ========== */
 
+    /* ========== ANOTHER ========== */
+    --correct: #1e6f00;
+    --wrong: #b30000;
+    --warrning: #ff9f9f;
 }
 
 * {

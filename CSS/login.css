@@ -223,6 +223,8 @@ main .box form input {
     transition: 0.3s;
     position: relative;
     background: transparent;
+    color: var(--text-main);
+    font-weight: 700;
     border: none;
     border-bottom: 2px solid var(--text-secondary);
     transition: 0.3s;
