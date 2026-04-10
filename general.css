@@ -118,6 +118,12 @@ body {
     border: 1px solid var(--bg-main);
 }
 
+.btn-type-one.unclickable:hover {
+    color: var(--blue-accent);
+    background: transparent;
+    border: 1px solid var(--blue-accent);
+}
+
 .btn-type-two {
     color: var(--bg-main);
     background: var(--blue-accent);
@@ -129,6 +135,12 @@ body {
     color: var(--blue-accent);
     background: transparent;
     border: 1px solid var(--blue-accent);
+}
+
+.btn-type-two.unclickable:hover {
+    color: var(--bg-main);
+    background: var(--blue-accent);
+    border: 1px solid var(--bg-main);
 }
 
 .container {

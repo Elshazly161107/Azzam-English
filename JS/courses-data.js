@@ -1,5 +1,6 @@
 let coursesData = [
   {
+    id: "0",
     courseCode: "course0",
     courseNameEN: "foundation course",
     courseNameAR: "الكورس التأسيسي",
@@ -29,6 +30,7 @@ let coursesData = [
     courseLastUpdateDate: "2026-02-25T18:00:00Z",
   },
   {
+    id: "1",
     courseCode: "course1",
     courseNameEN: "Equipping for the Future course",
     courseNameAR: "كورس الاستعداد للمستقبل",
@@ -58,17 +60,3 @@ let coursesData = [
     courseLastUpdateDate: "2026-03-13T18:00:00Z",
   },
 ];
-
-let forAllParams = {
-  showCourseBtnAR: "عرض الكورس",
-  showCourseBtnEN: "show course",
-  subscribeBtnAR: "اشترك الآن !",
-  subscribeBtnEN: "subscribe now !",
-};
-
-coursesData = coursesData.map((course) => {
-  return {
-    ...course,
-    ...forAllParams,
-  };
-});

@@ -134,8 +134,8 @@ function homeCourses() {
           <div class="center">
             <div class="text">${points}</div>
             <div class="btns">
-              <button class="btn-type-one">${coursesData[i].showCourseBtnAR}</button>
-              <button class="btn-type-two buy-course-home-btn">${coursesData[i].subscribeBtnAR}</button>
+              <button class="btn-type-one">عرض الكورس</button>
+              <button class="btn-type-two buy-course-home-btn">اشترك الآن !</button>
             </div>
           </div>
           <div class="footer">
@@ -192,8 +192,8 @@ function homeCourses() {
           <div class="center">
             <div class="text">${points}</div>
             <div class="btns">
-              <button class="btn-type-one">${coursesData[i].showCourseBtnEN}</button>
-              <button class="btn-type-two buy-course-home-btn">${coursesData[i].subscribeBtnEN}</button>
+              <button class="btn-type-one">show course</button>
+              <button class="btn-type-two buy-course-home-btn">subscribe now !</button>
             </div>
           </div>
           <div class="footer">

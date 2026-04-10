@@ -17,7 +17,9 @@ function applyLanguage() {
   signUpFooterArrows();
   signUpFooterBtnsText();
   signUpFooterInfo();
-  signUpMainText();
+  signUpFinalFormsText();
+  sendFormBtnText();
+  wrongSendText();
 }
 
 // TOGGLE LANG
@@ -71,9 +73,9 @@ let welcomePhraseH1 = document.querySelector("header .container>h1");
 
 function welcomePhrase() {
   if (getLang() === "ar") {
-    welcomePhraseH1.textContent = "يشرفنا انضامك إلينا !";
+    welcomePhraseH1.textContent = "أهلًا بك";
   } else {
-    welcomePhraseH1.textContent = "We’re honored by your joining !";
+    welcomePhraseH1.textContent = "welcome";
   }
 }
 
@@ -85,14 +87,169 @@ function navBar() {
     step2.textContent = "بيانات ولي الأمر";
     step3.textContent = "المستوى الحالي";
     step4.textContent = "كلمة المرور";
-    convertText(document.body);
+    convertText(document.querySelector("nav"));
   } else {
     step1.textContent = "basic information";
     step2.textContent = "guardian details";
     step3.textContent = "current academic level";
     step4.textContent = "password";
-    revertNumbers(document.body);
+    revertNumbers(document.querySelector("nav"));
   }
+}
+
+// sign up main text
+/// forms functions
+function signUpForm1TextLang() {
+  if (getLang() === "ar") {
+    nameArLable.textContent = signUpFormData.nameAr.ar;
+    nameEnLable.textContent = signUpFormData.nameEn.ar;
+    birthLable.textContent = signUpFormData.birthday.ar;
+    phoneLable.textContent = signUpFormData.phoneNum.ar;
+    genderLable.textContent = signUpFormData.gender.ar;
+    addressLable.textContent = signUpFormData.address.ar;
+    for (let i = 0; i < signUpFormData.gender.op.length; i++) {
+      document.querySelector(
+        `main .form-1 .content>div:nth-of-type(5) select option:nth-of-type(${i + 1})`,
+      ).textContent = signUpFormData.gender.op[i].textAr;
+    }
+    for (let i = 0; i < signUpFormData.address.op.length; i++) {
+      document.querySelector(
+        `main .form-1 .content>div:nth-of-type(6) select option:nth-of-type(${i + 1})`,
+      ).textContent = signUpFormData.address.op[i].textAr;
+    }
+  } else {
+    nameArLable.textContent = signUpFormData.nameAr.en;
+    nameEnLable.textContent = signUpFormData.nameEn.en;
+    birthLable.textContent = signUpFormData.birthday.en;
+    phoneLable.textContent = signUpFormData.phoneNum.en;
+    genderLable.textContent = signUpFormData.gender.en;
+    addressLable.textContent = signUpFormData.address.en;
+    for (let i = 0; i < signUpFormData.gender.op.length; i++) {
+      document.querySelector(
+        `main .form-1 .content>div:nth-of-type(5) select option:nth-of-type(${i + 1})`,
+      ).textContent = signUpFormData.gender.op[i].textEn;
+    }
+    for (let i = 0; i < signUpFormData.address.op.length; i++) {
+      document.querySelector(
+        `main .form-1 .content>div:nth-of-type(6) select option:nth-of-type(${i + 1})`,
+      ).textContent = signUpFormData.address.op[i].textEn;
+    }
+  }
+  for (let i = 0; i < signUpFormData.gender.op.length; i++) {
+    document.querySelector(
+      `main .form-1 .content>div:nth-of-type(5) select option:nth-of-type(${i + 1})`,
+    ).value = signUpFormData.gender.op[i].val;
+  }
+  for (let i = 0; i < signUpFormData.address.op.length; i++) {
+    document.querySelector(
+      `main .form-1 .content>div:nth-of-type(6) select option:nth-of-type(${i + 1})`,
+    ).value = signUpFormData.address.op[i].val;
+  }
+}
+
+function signUpForm2TextLang() {
+  if (getLang() === "ar") {
+    guarName.textContent = signUpFormData.guardianName.ar;
+    guarPhone.textContent = signUpFormData.guardianPhone.ar;
+    guarJob.textContent = signUpFormData.guardianJob.ar;
+    guarRelation.textContent = signUpFormData.guardianRelation.ar;
+    for (let i = 0; i < signUpFormData.guardianRelation.op.length; i++) {
+      document.querySelector(
+        `main .form-2 .content>div:nth-of-type(4) select option:nth-of-type(${i + 1})`,
+      ).textContent = signUpFormData.guardianRelation.op[i].textAr;
+    }
+  } else {
+    guarName.textContent = signUpFormData.guardianName.en;
+    guarPhone.textContent = signUpFormData.guardianPhone.en;
+    guarJob.textContent = signUpFormData.guardianJob.en;
+    guarRelation.textContent = signUpFormData.guardianRelation.en;
+    for (let i = 0; i < signUpFormData.guardianRelation.op.length; i++) {
+      document.querySelector(
+        `main .form-2 .content>div:nth-of-type(4) select option:nth-of-type(${i + 1})`,
+      ).textContent = signUpFormData.guardianRelation.op[i].textEn;
+    }
+  }
+  for (let i = 0; i < signUpFormData.guardianRelation.op.length; i++) {
+    document.querySelector(
+      `main .form-2 .content>div:nth-of-type(4) select option:nth-of-type(${i + 1})`,
+    ).value = signUpFormData.guardianRelation.op[i].val;
+  }
+}
+
+function signUpForm3TextLang() {
+  if (getLang() === "ar") {
+    eduLevel.textContent = signUpFormData.educationLevel.ar;
+    for (let i = 0; i < signUpFormData.educationLevel.op.length; i++) {
+      document.querySelector(
+        `main .form-3 .content>div:nth-of-type(1) select option:nth-of-type(${i + 1})`,
+      ).textContent = signUpFormData.educationLevel.op[i].textAr;
+    }
+    // quiz
+    form3H1.textContent =
+      "اختر مستواك بناء على الاختبار أدناه، الاختيار حسب الجدول";
+    form3QuizLinkSpan.textContent = "رابط الاختبار";
+    form3TableTd1.textContent = "الدرجة";
+    form3TableTd2.textContent = "التقييم";
+    //
+    engLevel.textContent = signUpFormData.englishLevel.ar;
+    for (let i = 0; i < signUpFormData.englishLevel.op.length; i++) {
+      document.querySelector(
+        `main .form-3 .content>div:nth-of-type(3) select option:nth-of-type(${i + 1})`,
+      ).textContent = signUpFormData.englishLevel.op[i].textAr;
+    }
+  } else {
+    eduLevel.textContent = signUpFormData.educationLevel.en;
+    for (let i = 0; i < signUpFormData.educationLevel.op.length; i++) {
+      document.querySelector(
+        `main .form-3 .content>div:nth-of-type(1) select option:nth-of-type(${i + 1})`,
+      ).textContent = signUpFormData.educationLevel.op[i].textEn;
+    }
+    // quiz
+    form3H1.textContent =
+      "Choose your level based on the test below; selection is according to the table";
+    form3QuizLinkSpan.textContent = "quiz link";
+    form3TableTd1.textContent = "degree";
+    form3TableTd2.textContent = "rate";
+    //
+    engLevel.textContent = signUpFormData.englishLevel.en;
+    for (let i = 0; i < signUpFormData.englishLevel.op.length; i++) {
+      document.querySelector(
+        `main .form-3 .content>div:nth-of-type(3) select option:nth-of-type(${i + 1})`,
+      ).textContent = signUpFormData.englishLevel.op[i].textEn;
+    }
+  }
+  for (let i = 0; i < signUpFormData.educationLevel.op.length; i++) {
+    document.querySelector(
+      `main .form-3 .content>div:nth-of-type(1) select option:nth-of-type(${i + 1})`,
+    ).value = signUpFormData.educationLevel.op[i].val;
+  }
+  for (let i = 0; i < signUpFormData.englishLevel.op.length; i++) {
+    document.querySelector(
+      `main .form-3 .content>div:nth-of-type(3) select option:nth-of-type(${i + 1})`,
+    ).value = signUpFormData.englishLevel.op[i].val;
+  }
+}
+
+function signUpForm4TextLang() {
+  if (getLang() === "ar") {
+    emailLable.textContent = signUpFormData.email.ar;
+    userLable.textContent = signUpFormData.username.ar;
+    passLable.textContent = signUpFormData.password.ar;
+    confirmPassLable.textContent = signUpFormData.confirmPassword.ar;
+  } else {
+    emailLable.textContent = signUpFormData.email.en;
+    userLable.textContent = signUpFormData.username.en;
+    passLable.textContent = signUpFormData.password.en;
+    confirmPassLable.textContent = signUpFormData.confirmPassword.en;
+  }
+}
+
+/// final function of forms
+function signUpFinalFormsText() {
+  signUpForm1TextLang();
+  signUpForm2TextLang();
+  signUpForm3TextLang();
+  signUpForm4TextLang();
 }
 
 // sign up footer text
@@ -131,337 +288,32 @@ function signUpFooterInfo() {
   }
 }
 
-function signUpMainText() {
-  if (getLang() === "ar") {
-    main.innerHTML = `
-  <div class="container">
-      <div class="form-1 active">
-          <div class="content">
-              <div>
-                  <label for="full-name-arabic">الاسم كاملًا (بالعربية)</label>
-                  <input type="text" id="full-name-arabic">
-              </div>
-              <div>
-                  <label for="full-name-english">الاسم كاملًا (بالانجليزية)</label>
-                  <input type="text" id="full-name-english">
-              </div>
-              <div>
-                  <label for="birthday">تاريخ الميلاد</label>
-                  <input type="date" id="birthday">
-              </div>
-              <div>
-                  <label for="phone">رقم الهاتف</label>
-                  <input type="tel" id="phone">
-              </div>
-              <div>
-                  <label for="gender">الجنس</label>
-                  <select name="gender" id="gender">
-                      <option value>--اختر--</option>
-                      <option value="male">ذكر</option>
-                      <option value="female">أنثى</option>
-                  </select>
-              </div>
-              <div>
-                  <label for="home-place">مكان الإقامة</label>
-                  <select name="home-place" id="home-place">
-                      <option value>--اختر--</option>
-                      <option value="in-saudi">داخل السعودية</option>
-                      <option value="out-saudi">خارج السعودية</option>
-                  </select>
-              </div>
-          </div>
-      </div>
-      <div class="form-2">
-          <div class="content">
-              <div>
-                  <label for="guardian-name">اسم ولي الأمر</label>
-                  <input type="text" id="guardian-name">
-              </div>
-              <div>
-                  <label for="guardian-phone">رقم هاتف ولي الأمر</label>
-                  <input type="tel" id="guardian-phone">
-              </div>
-              <div>
-                  <label for="guardian-job">وظيفة ولي الأمر</label>
-                  <input type="text" id="guardian-job">
-              </div>
-              <div>
-                  <label for="guardian-relationship">صلة قرابة ولي الأمر</label>
-                  <select name="guardian-relationship"
-                      id="guardian-relationship">
-                      <option value>--اختر--</option>
-                      <option value="father">أب</option>
-                      <option value="mother">أم</option>
-                      <option value="brother">أخ</option>
-                      <option value="sister">أخت</option>
-                      <option value="other">أخرى</option>
-                  </select>
-              </div>
-          </div>
-      </div>
-      <div class="form-3">
-          <div class="content">
-              <div>
-                  <label for="education-level">المرحلة الدراسية</label>
-                  <select name="education-level" id="education-level">
-                      <option value>--اختر--</option>
-                      <option
-                          value="primary-school">المرحلة الابتدائية</option>
-                      <option
-                          value="middle-school">المرحلة المتوسطة</option>
-                      <option value="high-school">المرحلة الثانوية</option>
-                      <option value="university">الجامعة</option>
-                      <option value="other">أخرى</option>
-                  </select>
-              </div>
-
-              <div class="quiz">
-                  <h1>اختر مستواك بناء على الاختبار أدناه، الاختيار حسب الجدول</h1>
-                  <a href="#">
-                      <i class="fa-solid fa-link"></i>
-                      <span>رابط الاختبار</span>
-                  </a>
-                  <table>
-                      <thead>
-                          <tr>
-                              <td>الدرجة</td>
-                              <td>التقييم</td>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          <tr>
-                              <td>25 - 30</td>
-                              <td>a</td>
-                          </tr>
-                          <tr>
-                              <td>20 - 25</td>
-                              <td>b</td>
-                          </tr>
-                          <tr>
-                              <td>15 - 20</td>
-                              <td>c</td>
-                          </tr>
-                          <tr>
-                              <td>10 - 15</td>
-                              <td>d</td>
-                          </tr>
-                          <tr>
-                              <td>5 - 10</td>
-                              <td>e</td>
-                          </tr>
-                          <tr>
-                              <td>0 - 5</td>
-                              <td>f</td>
-                          </tr>
-                      </tbody>
-                  </table>
-              </div>
-              <div>
-                  <label for="english-level">مستوى اللغة</label>
-                  <select name="english-level" id="english-level">
-                      <option value>--اختر--</option>
-                      <option value="a">a</option>
-                      <option value="b">b</option>
-                      <option value="c">c</option>
-                      <option value="d">d</option>
-                      <option value="e">e</option>
-                      <option value="f">f</option>
-                  </select>
-              </div>
-          </div>
-      </div>
-      <div class="form-4">
-          <div class="content">
-              <div>
-                  <label for="email">البريد الالكتروني</label>
-                  <input type="email" id="email">
-              </div>
-              <div class="user-name-div">
-                  <i
-                      class="fa-solid fa-circle-check available"></i>
-                  <i class="fa-solid fa-circle-xmark unavailable"></i>
-                  <label for="user-name">اسم المستخدم</label>
-                  <input type="text" id="user-name">
-              </div>
-              <div>
-                  <label for="password">كلمة المرور</label>
-                  <input type="password" id="password">
-              </div>
-              <div>
-                  <label for="confirm-password">تأكيد كلمة المرور</label>
-                  <input type="password" id="confirm-password">
-              </div>
-          </div>
-      </div>
-  </div>`;
+function sendFormBtnText() {
+  if (currentStep === 3) {
+    if (getLang() === "ar") {
+      nextBtnSpan.textContent = "إرسال";
+    } else {
+      nextBtnSpan.textContent = "send";
+    }
   } else {
-    main.innerHTML = `
-  <div class="container">
-      <div class="form-1 active">
-          <div class="content">
-              <div>
-                  <label for="full-name-arabic">full name
-                      (arabic)</label>
-                  <input type="text" id="full-name-arabic">
-              </div>
-              <div>
-                  <label for="full-name-english">full name
-                      (english)</label>
-                  <input type="text" id="full-name-english">
-              </div>
-              <div>
-                  <label for="birthday">birthday date</label>
-                  <input type="date" id="birthday">
-              </div>
-              <div>
-                  <label for="phone">phone number</label>
-                  <input type="tel" id="phone">
-              </div>
-              <div>
-                  <label for="gender">gender</label>
-                  <select name="gender" id="gender">
-                      <option value>--select--</option>
-                      <option value="male">male</option>
-                      <option value="female">female</option>
-                  </select>
-              </div>
-              <div>
-                  <label for="home-place">home place</label>
-                  <select name="home-place" id="home-place">
-                      <option value>--select--</option>
-                      <option value="in-saudi">in saudi</option>
-                      <option value="out-saudi">out saudi</option>
-                  </select>
-              </div>
-          </div>
-      </div>
-      <div class="form-2">
-          <div class="content">
-              <div>
-                  <label for="guardian-name">guardian name</label>
-                  <input type="text" id="guardian-name">
-              </div>
-              <div>
-                  <label for="guardian-phone">guardian phone</label>
-                  <input type="tel" id="guardian-phone">
-              </div>
-              <div>
-                  <label for="guardian-job">guardian job</label>
-                  <input type="text" id="guardian-job">
-              </div>
-              <div>
-                  <label for="guardian-relationship">guardian
-                      relationship</label>
-                  <select name="guardian-relationship"
-                      id="guardian-relationship">
-                      <option value>--select--</option>
-                      <option value="father">father</option>
-                      <option value="mother">mother</option>
-                      <option value="brother">brother</option>
-                      <option value="sister">sister</option>
-                      <option value="other">other</option>
-                  </select>
-              </div>
-          </div>
-      </div>
-      <div class="form-3">
-          <div class="content">
-              <div>
-                  <label for="education-level">education level</label>
-                  <select name="education-level" id="education-level">
-                      <option value>--select--</option>
-                      <option
-                          value="primary-school">primary school</option>
-                      <option
-                          value="middle-school">middle school</option>
-                      <option value="high-school">high school</option>
-                      <option value="university">university</option>
-                      <option value="other">other</option>
-                  </select>
-              </div>
-
-              <div class="quiz">
-                  <h1>Select your level by completing the test in the
-                      link below, Placement is based on the following
-                      evaluation</h1>
-                  <a href="#">
-                      <i class="fa-solid fa-link"></i>
-                      <span>quiz link</span>
-                  </a>
-                  <table>
-                      <thead>
-                          <tr>
-                              <td>mark</td>
-                              <td>grade</td>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          <tr>
-                              <td>25 - 30</td>
-                              <td>a</td>
-                          </tr>
-                          <tr>
-                              <td>20 - 25</td>
-                              <td>b</td>
-                          </tr>
-                          <tr>
-                              <td>15 - 20</td>
-                              <td>c</td>
-                          </tr>
-                          <tr>
-                              <td>10 - 15</td>
-                              <td>d</td>
-                          </tr>
-                          <tr>
-                              <td>5 - 10</td>
-                              <td>e</td>
-                          </tr>
-                          <tr>
-                              <td>0 - 5</td>
-                              <td>f</td>
-                          </tr>
-                      </tbody>
-                  </table>
-              </div>
-              <div>
-                  <label for="english-level">english level</label>
-                  <select name="english-level" id="english-level">
-                      <option value>--select--</option>
-                      <option value="a">a</option>
-                      <option value="b">b</option>
-                      <option value="c">c</option>
-                      <option value="d">d</option>
-                      <option value="e">e</option>
-                      <option value="f">f</option>
-                  </select>
-              </div>
-          </div>
-      </div>
-      <div class="form-4">
-          <div class="content">
-              <div>
-                  <label for="email">email</label>
-                  <input type="email" id="email">
-              </div>
-              <div class="user-name-div">
-                  <i
-                      class="fa-solid fa-circle-check available"></i>
-                  <i class="fa-solid fa-circle-xmark unavailable"></i>
-                  <label for="user-name">username</label>
-                  <input type="text" id="user-name">
-              </div>
-              <div>
-                  <label for="password">password</label>
-                  <input type="password" id="password">
-              </div>
-              <div>
-                  <label for="confirm-password">confirm
-                      password</label>
-                  <input type="password" id="confirm-password">
-              </div>
-          </div>
-      </div>
-  </div>`;
+    if (getLang() === "ar") {
+      nextBtnSpan.textContent = "التالي";
+    } else {
+      nextBtnSpan.textContent = "next";
+    }
   }
-  stepsForms = document.querySelectorAll("main .container>div");
+}
+
+let wrongMsgP = document.querySelector(".wrong-msg p");
+let completeFormH1 = document.querySelector(".complete-signing h1");
+
+function wrongSendText() {
+  if (getLang() === "ar") {
+    completeFormH1.textContent = "اكتمل التسجيل";
+    wrongMsgP.textContent = "تأكد من اكمال جميع البيانات بشكل صحيح";
+  } else {
+    completeFormH1.textContent = "signing completed";
+    wrongMsgP.textContent =
+      "please make sure to fill in all the details correctly";
+  }
 }

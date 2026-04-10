@@ -47,9 +47,9 @@ for (let i = 0; i < coursesData.length; i++) {
   ${pointsDiv}
   </div>
   <div class="btns">
-  <button class="btn-type-one">${coursesData[i].showCourseBtnAR}</button>
+  <button class="btn-type-one">عرض الكورس</button>
   <button
-  class="buy-course-home-btn btn-type-two">${coursesData[i].subscribeBtnAR}</button>
+  class="buy-course-home-btn btn-type-two">اشترك الآن !</button>
   </div>
   </div>
   <div class="footer">

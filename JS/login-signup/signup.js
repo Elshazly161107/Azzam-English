@@ -4,6 +4,10 @@ function getLang() {
   return sessionStorage.getItem("currentLang");
 }
 
+let checkingInputsValues = false;
+let passwordConditionDone = false;
+let allInputs = document.querySelectorAll("main :is(input, select)");
+
 // index main menu
 
 let menuBtn = document.getElementById("menu-bars");
@@ -68,343 +72,452 @@ if (getLang() === "ar") {
     "Dear student, please ensure your details are accurate. This helps us customize your experience and keep you updated. Reviewing your info now saves time later";
 }
 
-// sign up main text
+/////////////////////// sign up javascript
+// sign up form data
+let signUpFormData = {
+  nameAr: {
+    ar: "الاسم كاملًا (بالعربية)",
+    en: "full name (arabic)",
+  },
+  nameEn: {
+    ar: "الاسم كاملًا (بالانجليزية)",
+    en: "full name (english)",
+  },
+  birthday: {
+    ar: "يوم الميلاد",
+    en: "birthday date",
+  },
+  phoneNum: {
+    ar: "رقم الهاتف",
+    en: "phone number",
+  },
+  gender: {
+    ar: "الجنس",
+    en: "gender",
+    op: [
+      {
+        textEn: "--select--",
+        textAr: "--اختر--",
+        val: "",
+      },
+      {
+        textEn: "male",
+        textAr: "ذكر",
+        val: "male",
+      },
+      {
+        textEn: "female",
+        textAr: "أنثى",
+        val: "female",
+      },
+    ],
+  },
+  address: {
+    ar: "العنوان",
+    en: "address",
+    op: [
+      {
+        textEn: "--select--",
+        textAr: "--اختر--",
+        val: "",
+      },
+      {
+        textEn: "inside saudi arabia",
+        textAr: "داخل السعودية",
+        val: "inksa",
+      },
+      {
+        textEn: "outside saudi arabia",
+        textAr: "خارج السعودية",
+        val: "outksa",
+      },
+    ],
+  },
+  guardianName: {
+    ar: "اسم ولي الأمر",
+    en: "guardian name",
+  },
+  guardianPhone: {
+    ar: "رقم هاتف ولي الأمر",
+    en: "guardian phone",
+  },
+  guardianJob: {
+    ar: "وظيفة ولي الأمر",
+    en: "guardian job",
+  },
+  guardianRelation: {
+    ar: "صلة قرابة ولي الأمر",
+    en: "guardian relationship",
+    op: [
+      {
+        textEn: "--select--",
+        textAr: "--اختر--",
+        val: "",
+      },
+      {
+        textEn: "father",
+        textAr: "أب",
+        val: "father",
+      },
+      {
+        textEn: "mother",
+        textAr: "أم",
+        val: "mother",
+      },
+      {
+        textEn: "brother",
+        textAr: "أخ",
+        val: "brother",
+      },
+      {
+        textEn: "sister",
+        textAr: "أخت",
+        val: "sister",
+      },
+      {
+        textEn: "uncle (dad)",
+        textAr: "عم",
+        val: "uncledad",
+      },
+      {
+        textEn: "uncle (mom)",
+        textAr: "خال",
+        val: "unclemom",
+      },
+      {
+        textEn: "other",
+        textAr: "أخرى",
+        val: "other",
+      },
+    ],
+  },
+  educationLevel: {
+    ar: "المرحلة الدراسية",
+    en: "education level",
+    op: [
+      {
+        textEn: "--select--",
+        textAr: "--اختر--",
+        val: "",
+      },
+      {
+        textEn: "primary school",
+        textAr: "المرحلة الإبتدائية",
+        val: "prischool",
+      },
+      {
+        textEn: "middle school",
+        textAr: "المرحلة المتوسطة (الإعدادية)",
+        val: "midschool",
+      },
+      {
+        textEn: "high school",
+        textAr: "المرحلة الثانوية",
+        val: "higschool",
+      },
+      {
+        textEn: "university",
+        textAr: "المرحلة الجامعية",
+        val: "uni",
+      },
+      {
+        textEn: "other",
+        textAr: "أخرى",
+        val: "other",
+      },
+    ],
+  },
+  englishLevel: {
+    ar: "المستوى الحالي في اللغة",
+    en: "english level",
+    op: [
+      {
+        textEn: "--select--",
+        textAr: "--اختر--",
+        val: "",
+      },
+      {
+        textEn: "a",
+        textAr: "a",
+        val: "a",
+      },
+      {
+        textEn: "b",
+        textAr: "b",
+        val: "b",
+      },
+      {
+        textEn: "c",
+        textAr: "c",
+        val: "c",
+      },
+      {
+        textEn: "d",
+        textAr: "d",
+        val: "d",
+      },
+      {
+        textEn: "e",
+        textAr: "e",
+        val: "e",
+      },
+      {
+        textEn: "f",
+        textAr: "f",
+        val: "f",
+      },
+    ],
+  },
+  email: {
+    ar: "البريد الإلكتروني",
+    en: "email",
+  },
+  username: {
+    ar: "اسم المستخدم",
+    en: "username",
+  },
+  password: {
+    ar: "كلمة المرور",
+    en: "password",
+  },
+  confirmPassword: {
+    ar: "تأكيد كلمة المرور",
+    en: "confirm password",
+  },
+};
 
-let main = document.querySelector("main");
+// form-1
 
-if (getLang() === "ar") {
-  main.innerHTML = `
-  <div class="container">
-      <div class="form-1 active">
-          <div class="content">
-              <div>
-                  <label for="full-name-arabic">الاسم كاملًا (بالعربية)</label>
-                  <input type="text" id="full-name-arabic">
-              </div>
-              <div>
-                  <label for="full-name-english">الاسم كاملًا (بالانجليزية)</label>
-                  <input type="text" id="full-name-english">
-              </div>
-              <div>
-                  <label for="birthday">تاريخ الميلاد</label>
-                  <input type="date" id="birthday">
-              </div>
-              <div>
-                  <label for="phone">رقم الهاتف</label>
-                  <input type="tel" id="phone">
-              </div>
-              <div>
-                  <label for="gender">الجنس</label>
-                  <select name="gender" id="gender">
-                      <option value>--اختر--</option>
-                      <option value="male">ذكر</option>
-                      <option value="female">أنثى</option>
-                  </select>
-              </div>
-              <div>
-                  <label for="home-place">مكان الإقامة</label>
-                  <select name="home-place" id="home-place">
-                      <option value>--اختر--</option>
-                      <option value="in-saudi">داخل السعودية</option>
-                      <option value="out-saudi">خارج السعودية</option>
-                  </select>
-              </div>
-          </div>
-      </div>
-      <div class="form-2">
-          <div class="content">
-              <div>
-                  <label for="guardian-name">اسم ولي الأمر</label>
-                  <input type="text" id="guardian-name">
-              </div>
-              <div>
-                  <label for="guardian-phone">رقم هاتف ولي الأمر</label>
-                  <input type="tel" id="guardian-phone">
-              </div>
-              <div>
-                  <label for="guardian-job">وظيفة ولي الأمر</label>
-                  <input type="text" id="guardian-job">
-              </div>
-              <div>
-                  <label for="guardian-relationship">صلة قرابة ولي الأمر</label>
-                  <select name="guardian-relationship"
-                      id="guardian-relationship">
-                      <option value>--اختر--</option>
-                      <option value="father">أب</option>
-                      <option value="mother">أم</option>
-                      <option value="brother">أخ</option>
-                      <option value="sister">أخت</option>
-                      <option value="other">أخرى</option>
-                  </select>
-              </div>
-          </div>
-      </div>
-      <div class="form-3">
-          <div class="content">
-              <div>
-                  <label for="education-level">المرحلة الدراسية</label>
-                  <select name="education-level" id="education-level">
-                      <option value>--اختر--</option>
-                      <option
-                          value="primary-school">المرحلة الابتدائية</option>
-                      <option
-                          value="middle-school">المرحلة المتوسطة</option>
-                      <option value="high-school">المرحلة الثانوية</option>
-                      <option value="university">الجامعة</option>
-                      <option value="other">أخرى</option>
-                  </select>
-              </div>
+let nameArLable = document.querySelector(
+  "main .form-1 .content>div:nth-of-type(1) label",
+);
 
-              <div class="quiz">
-                  <h1>اختر مستواك بناء على الاختبار أدناه، الاختيار حسب الجدول</h1>
-                  <a href="#">
-                      <i class="fa-solid fa-link"></i>
-                      <span>رابط الاختبار</span>
-                  </a>
-                  <table>
-                      <thead>
-                          <tr>
-                              <td>الدرجة</td>
-                              <td>التقييم</td>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          <tr>
-                              <td>25 - 30</td>
-                              <td>a</td>
-                          </tr>
-                          <tr>
-                              <td>20 - 25</td>
-                              <td>b</td>
-                          </tr>
-                          <tr>
-                              <td>15 - 20</td>
-                              <td>c</td>
-                          </tr>
-                          <tr>
-                              <td>10 - 15</td>
-                              <td>d</td>
-                          </tr>
-                          <tr>
-                              <td>5 - 10</td>
-                              <td>e</td>
-                          </tr>
-                          <tr>
-                              <td>0 - 5</td>
-                              <td>f</td>
-                          </tr>
-                      </tbody>
-                  </table>
-              </div>
-              <div>
-                  <label for="english-level">مستوى اللغة</label>
-                  <select name="english-level" id="english-level">
-                      <option value>--اختر--</option>
-                      <option value="a">a</option>
-                      <option value="b">b</option>
-                      <option value="c">c</option>
-                      <option value="d">d</option>
-                      <option value="e">e</option>
-                      <option value="f">f</option>
-                  </select>
-              </div>
-          </div>
-      </div>
-      <div class="form-4">
-          <div class="content">
-              <div>
-                  <label for="email">البريد الالكتروني</label>
-                  <input type="email" id="email">
-              </div>
-              <div class="user-name-div">
-                  <i
-                      class="fa-solid fa-circle-check available"></i>
-                  <i class="fa-solid fa-circle-xmark unavailable"></i>
-                  <label for="user-name">اسم المستخدم</label>
-                  <input type="text" id="user-name">
-              </div>
-              <div>
-                  <label for="password">كلمة المرور</label>
-                  <input type="password" id="password">
-              </div>
-              <div>
-                  <label for="confirm-password">تأكيد كلمة المرور</label>
-                  <input type="password" id="confirm-password">
-              </div>
-          </div>
-      </div>
-  </div>`;
-} else {
-  main.innerHTML = `
-  <div class="container">
-      <div class="form-1 active">
-          <div class="content">
-              <div>
-                  <label for="full-name-arabic">full name
-                      (arabic)</label>
-                  <input type="text" id="full-name-arabic">
-              </div>
-              <div>
-                  <label for="full-name-english">full name
-                      (english)</label>
-                  <input type="text" id="full-name-english">
-              </div>
-              <div>
-                  <label for="birthday">birthday date</label>
-                  <input type="date" id="birthday">
-              </div>
-              <div>
-                  <label for="phone">phone number</label>
-                  <input type="tel" id="phone">
-              </div>
-              <div>
-                  <label for="gender">gender</label>
-                  <select name="gender" id="gender">
-                      <option value>--select--</option>
-                      <option value="male">male</option>
-                      <option value="female">female</option>
-                  </select>
-              </div>
-              <div>
-                  <label for="home-place">home place</label>
-                  <select name="home-place" id="home-place">
-                      <option value>--select--</option>
-                      <option value="in-saudi">in saudi</option>
-                      <option value="out-saudi">out saudi</option>
-                  </select>
-              </div>
-          </div>
-      </div>
-      <div class="form-2">
-          <div class="content">
-              <div>
-                  <label for="guardian-name">guardian name</label>
-                  <input type="text" id="guardian-name">
-              </div>
-              <div>
-                  <label for="guardian-phone">guardian phone</label>
-                  <input type="tel" id="guardian-phone">
-              </div>
-              <div>
-                  <label for="guardian-job">guardian job</label>
-                  <input type="text" id="guardian-job">
-              </div>
-              <div>
-                  <label for="guardian-relationship">guardian
-                      relationship</label>
-                  <select name="guardian-relationship"
-                      id="guardian-relationship">
-                      <option value>--select--</option>
-                      <option value="father">father</option>
-                      <option value="mother">mother</option>
-                      <option value="brother">brother</option>
-                      <option value="sister">sister</option>
-                      <option value="other">other</option>
-                  </select>
-              </div>
-          </div>
-      </div>
-      <div class="form-3">
-          <div class="content">
-              <div>
-                  <label for="education-level">education level</label>
-                  <select name="education-level" id="education-level">
-                      <option value>--select--</option>
-                      <option
-                          value="primary-school">primary school</option>
-                      <option
-                          value="middle-school">middle school</option>
-                      <option value="high-school">high school</option>
-                      <option value="university">university</option>
-                      <option value="other">other</option>
-                  </select>
-              </div>
+let nameEnLable = document.querySelector(
+  "main .form-1 .content>div:nth-of-type(2) label",
+);
 
-              <div class="quiz">
-                  <h1>Select your level by completing the test in the
-                      link below, Placement is based on the following
-                      evaluation</h1>
-                  <a href="#">
-                      <i class="fa-solid fa-link"></i>
-                      <span>quiz link</span>
-                  </a>
-                  <table>
-                      <thead>
-                          <tr>
-                              <td>mark</td>
-                              <td>grade</td>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          <tr>
-                              <td>25 - 30</td>
-                              <td>a</td>
-                          </tr>
-                          <tr>
-                              <td>20 - 25</td>
-                              <td>b</td>
-                          </tr>
-                          <tr>
-                              <td>15 - 20</td>
-                              <td>c</td>
-                          </tr>
-                          <tr>
-                              <td>10 - 15</td>
-                              <td>d</td>
-                          </tr>
-                          <tr>
-                              <td>5 - 10</td>
-                              <td>e</td>
-                          </tr>
-                          <tr>
-                              <td>0 - 5</td>
-                              <td>f</td>
-                          </tr>
-                      </tbody>
-                  </table>
-              </div>
-              <div>
-                  <label for="english-level">english level</label>
-                  <select name="english-level" id="english-level">
-                      <option value>--select--</option>
-                      <option value="a">a</option>
-                      <option value="b">b</option>
-                      <option value="c">c</option>
-                      <option value="d">d</option>
-                      <option value="e">e</option>
-                      <option value="f">f</option>
-                  </select>
-              </div>
-          </div>
-      </div>
-      <div class="form-4">
-          <div class="content">
-              <div>
-                  <label for="email">email</label>
-                  <input type="email" id="email">
-              </div>
-              <div class="user-name-div">
-                  <i
-                      class="fa-solid fa-circle-check available"></i>
-                  <i class="fa-solid fa-circle-xmark unavailable"></i>
-                  <label for="user-name">username</label>
-                  <input type="text" id="user-name">
-              </div>
-              <div>
-                  <label for="password">password</label>
-                  <input type="password" id="password">
-              </div>
-              <div>
-                  <label for="confirm-password">confirm
-                      password</label>
-                  <input type="password" id="confirm-password">
-              </div>
-          </div>
-      </div>
-  </div>`;
+let birthLable = document.querySelector(
+  "main .form-1 .content>div:nth-of-type(3) label",
+);
+
+let phoneLable = document.querySelector(
+  "main .form-1 .content>div:nth-of-type(4) label",
+);
+
+let genderLable = document.querySelector(
+  "main .form-1 .content>div:nth-of-type(5) label",
+);
+
+let addressLable = document.querySelector(
+  "main .form-1 .content>div:nth-of-type(6) label",
+);
+
+function signUpForm1Text() {
+  if (getLang() === "ar") {
+    nameArLable.textContent = signUpFormData.nameAr.ar;
+    nameEnLable.textContent = signUpFormData.nameEn.ar;
+    birthLable.textContent = signUpFormData.birthday.ar;
+    phoneLable.textContent = signUpFormData.phoneNum.ar;
+    genderLable.textContent = signUpFormData.gender.ar;
+    addressLable.textContent = signUpFormData.address.ar;
+    for (let i = 0; i < signUpFormData.gender.op.length; i++) {
+      document.querySelector(
+        `main .form-1 .content>div:nth-of-type(5) select option:nth-of-type(${i + 1})`,
+      ).textContent = signUpFormData.gender.op[i].textAr;
+    }
+    for (let i = 0; i < signUpFormData.address.op.length; i++) {
+      document.querySelector(
+        `main .form-1 .content>div:nth-of-type(6) select option:nth-of-type(${i + 1})`,
+      ).textContent = signUpFormData.address.op[i].textAr;
+    }
+  } else {
+    nameArLable.textContent = signUpFormData.nameAr.en;
+    nameEnLable.textContent = signUpFormData.nameEn.en;
+    birthLable.textContent = signUpFormData.birthday.en;
+    phoneLable.textContent = signUpFormData.phoneNum.en;
+    genderLable.textContent = signUpFormData.gender.en;
+    addressLable.textContent = signUpFormData.address.en;
+    for (let i = 0; i < signUpFormData.gender.op.length; i++) {
+      document.querySelector(
+        `main .form-1 .content>div:nth-of-type(5) select option:nth-of-type(${i + 1})`,
+      ).textContent = signUpFormData.gender.op[i].textEn;
+    }
+    for (let i = 0; i < signUpFormData.address.op.length; i++) {
+      document.querySelector(
+        `main .form-1 .content>div:nth-of-type(6) select option:nth-of-type(${i + 1})`,
+      ).textContent = signUpFormData.address.op[i].textEn;
+    }
+  }
+  for (let i = 0; i < signUpFormData.gender.op.length; i++) {
+    document.querySelector(
+      `main .form-1 .content>div:nth-of-type(5) select option:nth-of-type(${i + 1})`,
+    ).value = signUpFormData.gender.op[i].val;
+  }
+  for (let i = 0; i < signUpFormData.address.op.length; i++) {
+    document.querySelector(
+      `main .form-1 .content>div:nth-of-type(6) select option:nth-of-type(${i + 1})`,
+    ).value = signUpFormData.address.op[i].val;
+  }
 }
 
-/////////////////////// sign up javascript
+// form-2
+
+let guarName = document.querySelector(
+  "main .form-2 .content>div:nth-of-type(1) label",
+);
+
+let guarPhone = document.querySelector(
+  "main .form-2 .content>div:nth-of-type(2) label",
+);
+
+let guarJob = document.querySelector(
+  "main .form-2 .content>div:nth-of-type(3) label",
+);
+
+let guarRelation = document.querySelector(
+  "main .form-2 .content>div:nth-of-type(4) label",
+);
+
+function signUpForm2Text() {
+  if (getLang() === "ar") {
+    guarName.textContent = signUpFormData.guardianName.ar;
+    guarPhone.textContent = signUpFormData.guardianPhone.ar;
+    guarJob.textContent = signUpFormData.guardianJob.ar;
+    guarRelation.textContent = signUpFormData.guardianRelation.ar;
+    for (let i = 0; i < signUpFormData.guardianRelation.op.length; i++) {
+      document.querySelector(
+        `main .form-2 .content>div:nth-of-type(4) select option:nth-of-type(${i + 1})`,
+      ).textContent = signUpFormData.guardianRelation.op[i].textAr;
+    }
+  } else {
+    guarName.textContent = signUpFormData.guardianName.en;
+    guarPhone.textContent = signUpFormData.guardianPhone.en;
+    guarJob.textContent = signUpFormData.guardianJob.en;
+    guarRelation.textContent = signUpFormData.guardianRelation.en;
+    for (let i = 0; i < signUpFormData.guardianRelation.op.length; i++) {
+      document.querySelector(
+        `main .form-2 .content>div:nth-of-type(4) select option:nth-of-type(${i + 1})`,
+      ).textContent = signUpFormData.guardianRelation.op[i].textEn;
+    }
+  }
+  for (let i = 0; i < signUpFormData.guardianRelation.op.length; i++) {
+    document.querySelector(
+      `main .form-2 .content>div:nth-of-type(4) select option:nth-of-type(${i + 1})`,
+    ).value = signUpFormData.guardianRelation.op[i].val;
+  }
+}
+
+// form-3
+
+let eduLevel = document.querySelector(
+  "main .form-3 .content>div:nth-of-type(1) label",
+);
+
+let form3H1 = document.querySelector("main .form-3 .content>.quiz h1");
+
+let form3QuizLink = document.querySelector("main .form-3 .content>.quiz a");
+
+let form3QuizLinkSpan = document.querySelector(
+  "main .form-3 .content>.quiz a span",
+);
+
+let form3TableTd1 = document.querySelector(
+  "main .form-3 .content>.quiz table thead tr td:nth-of-type(1)",
+);
+
+let form3TableTd2 = document.querySelector(
+  "main .form-3 .content>.quiz table thead tr td:nth-of-type(2)",
+);
+
+let engLevel = document.querySelector(
+  "main .form-3 .content>div:nth-of-type(3) label",
+);
+
+function signUpForm3Text() {
+  if (getLang() === "ar") {
+    eduLevel.textContent = signUpFormData.educationLevel.ar;
+    for (let i = 0; i < signUpFormData.educationLevel.op.length; i++) {
+      document.querySelector(
+        `main .form-3 .content>div:nth-of-type(1) select option:nth-of-type(${i + 1})`,
+      ).textContent = signUpFormData.educationLevel.op[i].textAr;
+    }
+    // quiz
+    form3H1.textContent =
+      "اختر مستواك بناء على الاختبار أدناه، الاختيار حسب الجدول";
+    form3QuizLinkSpan.textContent = "رابط الاختبار";
+    form3TableTd1.textContent = "الدرجة";
+    form3TableTd2.textContent = "التقييم";
+    //
+    engLevel.textContent = signUpFormData.englishLevel.ar;
+    for (let i = 0; i < signUpFormData.englishLevel.op.length; i++) {
+      document.querySelector(
+        `main .form-3 .content>div:nth-of-type(3) select option:nth-of-type(${i + 1})`,
+      ).textContent = signUpFormData.englishLevel.op[i].textAr;
+    }
+  } else {
+    eduLevel.textContent = signUpFormData.educationLevel.en;
+    for (let i = 0; i < signUpFormData.educationLevel.op.length; i++) {
+      document.querySelector(
+        `main .form-3 .content>div:nth-of-type(1) select option:nth-of-type(${i + 1})`,
+      ).textContent = signUpFormData.educationLevel.op[i].textEn;
+    }
+    // quiz
+    form3H1.textContent =
+      "Choose your level based on the test below; selection is according to the table";
+    form3QuizLinkSpan.textContent = "quiz link";
+    form3TableTd1.textContent = "degree";
+    form3TableTd2.textContent = "rate";
+    //
+    engLevel.textContent = signUpFormData.englishLevel.en;
+    for (let i = 0; i < signUpFormData.englishLevel.op.length; i++) {
+      document.querySelector(
+        `main .form-3 .content>div:nth-of-type(3) select option:nth-of-type(${i + 1})`,
+      ).textContent = signUpFormData.englishLevel.op[i].textEn;
+    }
+  }
+  for (let i = 0; i < signUpFormData.educationLevel.op.length; i++) {
+    document.querySelector(
+      `main .form-3 .content>div:nth-of-type(1) select option:nth-of-type(${i + 1})`,
+    ).value = signUpFormData.educationLevel.op[i].val;
+  }
+  for (let i = 0; i < signUpFormData.englishLevel.op.length; i++) {
+    document.querySelector(
+      `main .form-3 .content>div:nth-of-type(3) select option:nth-of-type(${i + 1})`,
+    ).value = signUpFormData.englishLevel.op[i].val;
+  }
+}
+
+// form-4
+
+let emailLable = document.querySelector(
+  "main .form-4 .content>div:nth-of-type(1) label",
+);
+
+let userLable = document.querySelector(
+  "main .form-4 .content>div:nth-of-type(2) label",
+);
+
+let passLable = document.querySelector(
+  "main .form-4 .content>div:nth-of-type(3) label",
+);
+
+let confirmPassLable = document.querySelector(
+  "main .form-4 .content>div:nth-of-type(4) label",
+);
+
+function signUpForm4Text() {
+  if (getLang() === "ar") {
+    emailLable.textContent = signUpFormData.email.ar;
+    userLable.textContent = signUpFormData.username.ar;
+    passLable.textContent = signUpFormData.password.ar;
+    confirmPassLable.textContent = signUpFormData.confirmPassword.ar;
+  } else {
+    emailLable.textContent = signUpFormData.email.en;
+    userLable.textContent = signUpFormData.username.en;
+    passLable.textContent = signUpFormData.password.en;
+    confirmPassLable.textContent = signUpFormData.confirmPassword.en;
+  }
+}
 
 // general
 let currentStep = 0;
@@ -413,6 +526,13 @@ let stepsOfLine = ["comp-step-1", "comp-step-2", "comp-step-3", "comp-step-4"];
 let steps = document.querySelectorAll("nav .steps>div span");
 let stepsP = document.querySelectorAll("nav .steps>div p");
 let stepsForms = document.querySelectorAll("main .container>div");
+let formSaved = document.querySelector(".complete-signing");
+let formSavedIcon = document.querySelector(".complete-signing .check");
+let wrongMsg = document.querySelector(".wrong-msg");
+
+// password
+let passIn = document.querySelector("[id='password']");
+let confPassIn = document.querySelector("[id='confirm-password']");
 
 stepsGeneralSpan();
 stepsGeneralP();
@@ -422,15 +542,164 @@ formsGeneral();
 let nextBtn = document.querySelector("footer .btns .next");
 let previousBtn = document.querySelector("footer .btns .previous");
 
+btnsCurser(previousBtn);
+sendFormBtn();
+
 nextBtn.addEventListener("click", () => {
   if (currentStep < 3) {
     currentStep++;
     completingLine.setAttribute("class", "nav");
     completingLine.classList.add(stepsOfLine[currentStep - 1]);
+  } else if ((currentStep = 3)) {
+    let values = 0;
+    allInputs.forEach((inp) => {
+      if (inp.value !== "") {
+        inp.classList.remove("warrning");
+        values++;
+      } else {
+        inp.classList.add("warrning");
+      }
+    });
+    if (values === allInputs.length) {
+      let passArray = passIn.value.split("");
+      let chars = ["@", "#", "$", "%", "&"];
+      let nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
+      let capLetters = [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G",
+        "H",
+        "I",
+        "J",
+        "K",
+        "L",
+        "M",
+        "N",
+        "O",
+        "P",
+        "Q",
+        "R",
+        "S",
+        "T",
+        "U",
+        "V",
+        "W",
+        "X",
+        "Y",
+        "Z",
+      ];
+      let smallLetters = [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g",
+        "h",
+        "i",
+        "j",
+        "k",
+        "l",
+        "m",
+        "n",
+        "o",
+        "p",
+        "q",
+        "r",
+        "s",
+        "t",
+        "u",
+        "v",
+        "w",
+        "x",
+        "y",
+        "z",
+      ];
+      //
+      let charsNum = 0;
+      let numsNum = 0;
+      let capLettersNum = 0;
+      let smallLettersNum = 0;
+      for (let i = 0; i < passArray.length; i++) {
+        for (let d = 0; d < chars.length; d++) {
+          if (passArray[i] === chars[d]) {
+            charsNum++;
+            console.log(chars[d]);
+            console.log(charsNum);
+          }
+        }
+        for (let d = 0; d < nums.length; d++) {
+          if (passArray[i] === nums[d].toString()) {
+            numsNum++;
+            console.log(nums[d]);
+            console.log(numsNum);
+          }
+        }
+        for (let d = 0; d < capLetters.length; d++) {
+          if (passArray[i] === capLetters[d]) {
+            capLettersNum++;
+            console.log(capLetters[d]);
+            console.log(capLettersNum);
+          }
+        }
+        for (let d = 0; d < smallLetters.length; d++) {
+          if (passArray[i] === smallLetters[d]) {
+            smallLettersNum++;
+            console.log(smallLetters[d]);
+            console.log(smallLettersNum);
+          }
+        }
+      }
+      if (
+        charsNum > 0 &&
+        numsNum > 0 &&
+        capLettersNum > 0 &&
+        smallLettersNum > 0
+      ) {
+        passwordConditionDone = true;
+        console.log("true");
+      } else {
+        passwordConditionDone = false;
+        console.log("false");
+      }
+      if (passwordConditionDone === true) {
+        checkingInputsValues = true;
+      } else {
+        checkingInputsValues = false;
+      }
+    } else {
+      checkingInputsValues = false;
+    }
+    if (checkingInputsValues === true) {
+      // allInputs.forEach((inp) => {
+      //   inp.value = "";
+      // });
+      completingLine.classList.add(stepsOfLine[currentStep]);
+      formSaved.classList.add("open");
+      setTimeout(() => {
+        formSavedIcon.classList.add("open");
+      }, 2000);
+      setTimeout(() => {
+        formSaved.classList.remove("open");
+        formSavedIcon.classList.remove("open");
+      }, 4000);
+    } else {
+      wrongMsg.classList.add("open");
+      setTimeout(() => {
+        wrongMsg.classList.remove("open");
+      }, 3500);
+    }
   } else return;
   stepsGeneralSpan();
   stepsGeneralP();
   formsGeneral();
+  btnsCurser(previousBtn);
+  sendFormBtn();
 });
 
 previousBtn.addEventListener("click", () => {
@@ -442,6 +711,8 @@ previousBtn.addEventListener("click", () => {
   stepsGeneralSpan();
   stepsGeneralP();
   formsGeneral();
+  btnsCurser(previousBtn);
+  sendFormBtn();
 });
 
 // functions
@@ -472,6 +743,33 @@ function stepsGeneralP() {
   });
   stepsP[currentStep].classList.add("current");
 }
+
+function btnsCurser(btn) {
+  if (currentStep === 0) {
+    btn.classList.add("unclickable");
+  } else {
+    btn.classList.remove("unclickable");
+  }
+}
+
+function sendFormBtn() {
+  if (currentStep === 3) {
+    if (getLang() === "ar") {
+      nextBtnSpan.textContent = "إرسال";
+    } else {
+      nextBtnSpan.textContent = "send";
+    }
+    nextBtn.classList.add("send-btn");
+  } else {
+    if (getLang() === "ar") {
+      nextBtnSpan.textContent = "التالي";
+    } else {
+      nextBtnSpan.textContent = "next";
+    }
+    nextBtn.classList.remove("send-btn");
+  }
+}
+
 /////////////////////// end sign up javascript
 
 // arabic nums
